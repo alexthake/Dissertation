@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +20,10 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('app', require('./App.vue').default);
+Vue.component('home-project', require('./components/HomeProject.vue').default);
+Vue.component('progress-bar', require('./components/ProgressBar.vue').default);
+Vue.component('new-project-button', require('./components/NewProjectButton.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
