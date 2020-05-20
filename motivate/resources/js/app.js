@@ -5,8 +5,13 @@
  */
 
 require('./bootstrap');
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 window.Vue = require('vue');
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin)
 Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 
 /**
@@ -20,10 +25,14 @@ Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttrib
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('app', require('./App.vue').default);
+Vue.component('dashboard', require('./Dashboard.vue').default);
 Vue.component('home-project', require('./components/HomeProject.vue').default);
 Vue.component('progress-bar', require('./components/ProgressBar.vue').default);
-Vue.component('new-project-button', require('./components/NewProjectButton.vue').default);
+Vue.component('new-project', require('./components/NewProject.vue').default);
+Vue.component('edit-project', require('./components/EditProject.vue').default);
+Vue.component('new-project-button', require('./components/EditProject.vue').default);
+
+Vue.component('project', require('./Project.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

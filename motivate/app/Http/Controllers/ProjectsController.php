@@ -15,8 +15,36 @@ class ProjectsController extends Controller
         return response(Project::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
-    public function projectsByUser()
+    public function show($id)
     {
-        return Project::where('user_id', 3)->get();
+        return response(Project::find($id), Response::HTTP_OK);
+    }
+
+    public function store(Request $request)
+    {   
+        $project = new Project;
+        $project->project_name = $request->project_name;
+        $project->project_due = $request->project_due;
+        $project->user_id = $request->user_id;
+
+        $project->save();
+
+        return $project->id;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $project = Project::find($id);
+
+        $project->project_name = $request->project_name;
+        $project->project_due = $request->project_due;
+        $project->user_id = $request->user_id;
+
+        $project->save();
+    }
+
+    public function projectsByUser($userid)
+    {
+        return Project::where('user_id', $userid)->get();
     }
 }
