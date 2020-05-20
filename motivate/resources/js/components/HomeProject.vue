@@ -1,13 +1,13 @@
 <template>
     <div class="container m-0">
         <div class="card my-3">
-            <div type="button" class="card-body p-2">
+            <a type="button" :href="'/project/'+this.id" class="card-body p-2 projectName">
                 <div class="row mb-1">
                     <div class="col-10">
-                        <h3>{{name}}</h3>
+                        <h3>{{this.name}}</h3>
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-light float-right">...</button>
+                        <button id="show-edit-modal" type="button" @click="showEditModal = true" class="btn btn-light float-right">...</button>
                     </div>
                 </div>
                 <div class="row">
@@ -17,7 +17,8 @@
                         :time="j"></progress-bar>
                     </div>
                 </div>
-            </div>
+                <edit-project v-on:update-name="updateProject($event)" v-if="showEditModal" @close="showEditModal = false" :projectId=this.id :initialNameInput=this.name :initialDueInput=this.due></edit-project>
+            </a>
         </div>
     </div>
 </template>
@@ -27,15 +28,22 @@
     import moment from 'moment'
 
     export default{
+        methods: {
+            updateProject($event){
+                this.name = $event[0];
+                this.due = $event[1];
+            }
+        },
         data: function() {
             var start = moment(this.created);
             var end = moment(this.due);
             var span = end.diff(start, "minutes");
             var position = moment().diff(start, "minutes");
-            console.log();
             return{
                 i: Math.floor((Math.random() * 100) + 1),
-                j: Math.floor((position/span)*100)
+                j: Math.floor((position/span)*100),
+
+                showEditModal: false
             }
         },
         components: {
@@ -44,3 +52,12 @@
         props: ['id', 'name', 'due', 'created'],
     }
 </script>
+
+<style scoped>
+    .projectName{
+        color: black;
+    }
+    .projectName:hover{
+        text-decoration: none;
+    }
+</style>

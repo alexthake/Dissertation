@@ -6,5 +6,5 @@
         {{ session('status') }}
     </div>
 @endif
-<app></app>
+<dashboard></dashboard>
 @endsection
