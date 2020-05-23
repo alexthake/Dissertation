@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Section;
+use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Faker\Generator;
@@ -46,5 +48,21 @@ class ProjectsController extends Controller
     public function projectsByUser($userid)
     {
         return Project::where('user_id', $userid)->get();
+    }
+
+    public function projectProgress($projectId)
+    {
+        $tasks[0] = DB::table('tasks')
+        ->join('sections','sections.id', '=', 'tasks.section_id')
+        ->join('projects', 'projects.id', '=', 'sections.project_id')
+        ->where('project_id', $projectId)
+        ->get()->count();
+
+        $tasks[1] = DB::table('tasks')
+        ->join('sections','sections.id', '=', 'tasks.section_id')
+        ->join('projects', 'projects.id', '=', 'sections.project_id')
+        ->where([['project_id', $projectId],['task_completed', true]])
+        ->get()->count();
+        return $tasks;
     }
 }

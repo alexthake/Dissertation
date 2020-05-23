@@ -3,21 +3,22 @@
         <div class="modal-mask">
             <div class="modal-wrapper container">
                 <div class="modal-container card">
-                    <div class="card-header py-2 px-4">
-                        <h4 class="m-0 mt-2 d-inline-block">Edit Project</h4>
-                        <button type="button" class="btn btn-light float-right d-inline" @click="$emit('close')">X</button>
-                    </div>
                     <div class="card-body">
                         <form>
-                        <div class="form-group">
-                            <label class="mb-0" for="newProjectName">Project Name</label>
-                            <!-- autofill -->
-                            <input type="text" class="form-control" id="newProjectName" placeholder="Enter project name" v-model="nameInput">
-                            <label class="mt-2 mb-0" for="due-datepicker">Due Date</label>
-                            <!-- autofill -->
-                            <b-form-datepicker id="due-datepicker" class="mb-2" v-model="dueInput"></b-form-datepicker>
+                        <div class="form-row">
+                            <div class="form-group col-12 mb-0">
+                                <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model="nameInput">
+                            </div>
                         </div>
+                        <div class="form-row mt-1 mb-3">
+                                <div class="form-group col-12 mb-0">
+                                    <label class="mt-2 mb-0 float-left" for="due-datepicker">Task Due</label>
+                                    <b-form-datepicker id="due-datepicker" class="mb-2 w-50 float-right" v-model="dueInput"></b-form-datepicker>
+                                </div>
+                            </div>
+                        <button type="button" class="btn btn-danger float-left">Delete</button>
                         <button type="button" class="btn btn-success float-right" @click="update(); $emit('close'); $emit('update-name', [nameInput, dueInput])">Submit</button>
+                        <button type="button" class="btn btn-light float-right mr-2" @click="$emit('close')">Close</button>
                         </form>
                     </div>
                 </div>
@@ -52,6 +53,13 @@
 </script>
 
 <style scoped>
+.chameleon-input{
+    font-size: 24px;
+    border: none;
+    color: #212529;
+    height: 34px;
+}
+
 .modal-mask {
   position: fixed;
   z-index: 9998;

@@ -23,6 +23,6 @@ class ProjectPageController extends Controller
      */
     public function index($id)
     {
-        return view('project');
+        return view('project')->with('id', $id);
     }
 }
