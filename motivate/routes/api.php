@@ -18,6 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/projects/user/{id}', 'ProjectsController@projectsByUser');
+Route::get('/projects/progress/{id}', 'ProjectsController@projectProgress');
 Route::resource('/projects', 'ProjectsController', [
     'except' => ['create']
+]);
+Route::get('/sections/project/{id}', 'SectionsController@sectionsByProject');
+Route::get('/sections/progress/{id}', 'SectionsController@sectionProgress');
+Route::resource('/sections', 'SectionsController', [
+    'except' => ['index']
+]);
+Route::get('/tasks/section/{id}', 'TasksController@tasksBySection');
+Route::resource('/tasks', 'TasksController', [
+    'except' => ['index']
 ]);

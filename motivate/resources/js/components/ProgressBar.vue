@@ -1,6 +1,6 @@
 <template>
     <div class="progress position-relative">
-        <div class="progress-bar" role="progressbar" :style="'width: '+progress+'%;'" :aria-valuenow="progress+'%'" aria-valuemin="0" aria-valuemax="100"></div>
+        <div :class="'progress-bar '+ ((progress == 100) ? 'bg-success' : '')" role="progressbar" :style="'width: '+progress+'%;'" :aria-valuenow="progress+'%'" aria-valuemin="0" aria-valuemax="100"></div>
         <div class="position-absolute progress-timemark" :style="'left: '+time+'%;'"></div>
     </div>
 </template>

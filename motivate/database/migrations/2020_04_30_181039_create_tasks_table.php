@@ -16,12 +16,12 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('task_name');
-            $table->longText('task_description');
-            $table->dateTime('task_due');
-            $table->boolean('task_completed');
-            $table->dateTime('completion_date');
-            $table->integer('task_priority');
-            $table->float('task_progress_weight');
+            $table->longText('task_description')->nullable();
+            $table->dateTime('task_due')->nullable();
+            $table->boolean('task_completed')->default(false);
+            $table->dateTime('completion_date')->nullable();
+            $table->integer('task_priority')->default(1);
+            $table->float('task_progress_weight')->default(1);
             $table->unsignedBigInteger('section_id');
             $table->timestamps();
 

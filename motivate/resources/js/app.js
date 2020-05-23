@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+import moment from 'moment'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -33,7 +34,11 @@ Vue.component('edit-project', require('./components/EditProject.vue').default);
 Vue.component('new-project-button', require('./components/EditProject.vue').default);
 
 Vue.component('project', require('./Project.vue').default);
+Vue.component('project-section', require('./components/Section.vue').default);
+Vue.component('task', require('./components/Task.vue').default);
 
+Vue.component('edit-section', require('./components/EditSection.vue').default);
+Vue.component('edit-task', require('./components/EditTask.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
