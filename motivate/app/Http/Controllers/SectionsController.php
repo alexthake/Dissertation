@@ -49,6 +49,13 @@ class SectionsController extends Controller
         $section->save();
     }
 
+    public function destroy($id)
+    {
+        Section::destroy($id);
+
+        return response(null, Response::HTTP_OK);
+    }
+
     public function sectionsByProject($projectId)
     {
         return Section::where('project_id', $projectId)->get();

@@ -1,11 +1,21 @@
 <template>
     <div class="container">
+        <b-alert
+        :show="dismissCountDown"
+        dismissible
+        variant="danger"
+        @dismissed="dismissCountDown=0"
+        @dismiss-count-down="countDownChanged"
+        >
+        <p class="m-0">Unable to delete, please delete any contained tasks or sections and try again</p>
+        </b-alert>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <home-project
                 v-for="project in projects"
                 v-bind="project"
                 :key="project.id"
+                @delete-project="deleteProject"
                 ></home-project>
                 <div class="container m-0">
                     <div class="card my-3">
@@ -38,7 +48,8 @@
         data: function() {
             return{
                 projects: [],
-                showNewModal: false
+                showNewModal: false,
+                dismissCountDown: 0
             }
         },
         methods: {
@@ -46,8 +57,20 @@
                 const { data } = await window.axios.get('/api/projects/user/'+this.$userId);
                 data.forEach(project => this.projects.push(new projectIni(project)));
             },
-            async del(id) {
-                // To do
+            async deleteProject(id) {
+                try {
+                    await window.axios.delete(`/api/projects/`+id);
+                    let index = this.projects.findIndex(project => project.id === id);
+                    this.projects.splice(index, 1);
+                } catch(error) {
+                    this.showAlert();
+                }
+            },
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+            showAlert() {
+                this.dismissCountDown = 5
             }
         },
         components: {

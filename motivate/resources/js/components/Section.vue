@@ -3,27 +3,31 @@
         <div class="section col-11">
             <div class="container pt-2 p-0">
                 <div class="row mb-1">
-                    <div class="col-10">
-                        <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model.lazy="nameInput" @change="renameSection()">
+                    <div class="col-12 col-lg-8">
+                        <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model.lazy="nameInput" @change="update()">
                     </div>
-                    <div class="col-2">
+                    <div class="col-9 col-lg-3">
+                            <h6 v-if="this.dueValue" :class="'d-inline-block mx-2 float-left float-lg-right mt-2 '+((this.dueMarker >= 100 && this.sectionProgress != 100) ? 'text-red' : '')">{{dueString}}</h6><h6 v-if="this.dueValue" :class="'d-inline-block float-left float-lg-right mt-2 '+((this.dueMarker >= 100 && this.sectionProgress != 100) ? 'text-red' : '')"><b-icon-alarm></b-icon-alarm></h6>
+                        </div>
+                    <div class="col-3 col-lg-1">
                         <button id="show-edit-modal" type="button" @click="showEditSectionModal = true" class="btn btn-light float-right py-1">...</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <progress-bar
-                        :progress=progress 
+                        :progress=sectionProgress 
                         :time=dueMarker></progress-bar>
                     </div>
                 </div>
 
-                <edit-section v-on:update-name="updateSection($event)" v-if="showEditSectionModal" @close="showEditSectionModal = false" :sectionId=this.id :projectId=this.project :initialNameInput=this.name :initialDueInput=this.due></edit-section>
+                <edit-section v-on:update-name="updateSection($event)" v-on:delete-section="del" v-if="showEditSectionModal" @close="showEditSectionModal = false" :sectionId=this.id :projectId=this.project :initialNameInput=this.name :initialDueInput=this.dueValue></edit-section>
                 
                 <task
                 v-for="task in tasks"
                 v-bind="task"
                 :key="task.id"
+                @delete-task="deleteTask"
                 v-on:get-progress="getProgress()"
                 ></task>
 
@@ -54,11 +58,19 @@
 
     export default{
         data: function() {
+            var start = moment(this.project_created);
+            var end = moment(this.due);
+            var span = end.diff(start, "minutes");
+            var position = moment().diff(start, "minutes");
             return{
                 tasks: [],
                 showEditSectionModal: false,
                 nameInput: this.name,
-                dueMarker: 0
+                dueValue: this.due,
+                dueMarker: 0,
+                dueString: moment(this.dueValue).format('DD/MM/YY'),
+                dueMarker: Math.floor((position/span)*100),
+                sectionProgress: 0,
             }
         },
         props: {
@@ -67,7 +79,6 @@
             due: String,
             completed: Boolean,
             project: Number,
-            progress: Number,
             project_created: String
         },
         methods: {
@@ -77,8 +88,8 @@
             },
             async update() {
                 await window.axios.patch(`/api/sections/`+this.id, { 
-                        section_name: this.name, 
-                        section_due: this.due,
+                        section_name: this.nameInput, 
+                        section_due: this.dueValue,
                         project_id: this.project
                     }
                 );
@@ -87,14 +98,16 @@
             async createTask() {
                 const {data} = await window.axios.get('/api/tasks/create?section_id='+this.id);
                 this.tasks.push(new tasksIni(data));
+                this.getProgress();
             },
             async getProgress() {
+                this.$emit('get-project-progress');
                 const {data} = await window.axios.get('/api/sections/progress/'+this.id);
 
                 var $total = data[0];
                 var $completed = data[1];
 
-                this.progress = (($completed/$total)*100);
+                this.sectionProgress = (($completed/$total)*100);
 
                 var start = moment(this.project_created);
                 var end = moment(this.due);
@@ -103,13 +116,19 @@
 
                 this.dueMarker = Math.floor((position/span)*100);
             },
-            updateSection($event){
-                this.name = $event[0];
-                this.due = $event[1];
+            async deleteTask(id) {
+                await window.axios.delete(`/api/tasks/`+id);
+                let index = this.tasks.findIndex(task => task.id === id);
+                this.tasks.splice(index, 1);
             },
-            renameSection() {
-                this.name = this.nameInput;
-                this.update();
+            updateSection($event){
+                this.nameInput = $event[0];
+                this.dueValue = $event[1];
+                this.getProgress();
+                this.dueString = moment(this.due).format('DD/MM/YY');
+            },
+            del(){
+                this.$emit('delete-section', this.id);
             }
         },
         created() {
@@ -120,11 +139,14 @@
 </script>
 
 <style scoped>
-.chameleon-input{
-    font-size: 24px;
-    font-weight: 500;
-    border: none;
-    color: #212529;
-    height: 30px;
-}
+    .text-red{
+        color: red;
+    }
+    .chameleon-input{
+        font-size: 24px;
+        font-weight: 500;
+        border: none;
+        color: #212529;
+        height: 30px;
+    }
 </style>

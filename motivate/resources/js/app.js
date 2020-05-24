@@ -27,13 +27,16 @@ Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttrib
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dashboard', require('./Dashboard.vue').default);
+Vue.component('project-page', require('./ProjectPage.vue').default);
+
+
 Vue.component('home-project', require('./components/HomeProject.vue').default);
 Vue.component('progress-bar', require('./components/ProgressBar.vue').default);
 Vue.component('new-project', require('./components/NewProject.vue').default);
 Vue.component('edit-project', require('./components/EditProject.vue').default);
 Vue.component('new-project-button', require('./components/EditProject.vue').default);
 
-Vue.component('project', require('./Project.vue').default);
+Vue.component('project', require('./components/Project.vue').default);
 Vue.component('project-section', require('./components/Section.vue').default);
 Vue.component('task', require('./components/Task.vue').default);
 

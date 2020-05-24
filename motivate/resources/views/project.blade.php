@@ -6,5 +6,5 @@
         {{ session('status') }}
     </div>
 @endif
-<project :id="{{$id}}"></project>
+<project-page :id="{{$id}}"></project-page>
 @endsection
