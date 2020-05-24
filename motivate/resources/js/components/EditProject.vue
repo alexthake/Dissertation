@@ -2,24 +2,26 @@
     <transition name="modal">
         <div class="modal-mask">
             <div class="modal-wrapper container">
-                <div class="modal-container card">
-                    <div class="card-body">
-                        <form>
-                        <div class="form-row">
-                            <div class="form-group col-12 mb-0">
-                                <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model="nameInput">
-                            </div>
-                        </div>
-                        <div class="form-row mt-1 mb-3">
+                <div class="row justify-content-center">
+                    <div class="modal-container col-12 col-md-8 col-lg-6 mt-5 card">
+                        <div class="card-body">
+                            <form>
+                            <div class="form-row">
                                 <div class="form-group col-12 mb-0">
-                                    <label class="mt-2 mb-0 float-left" for="due-datepicker">Task Due</label>
-                                    <b-form-datepicker id="due-datepicker" class="mb-2 w-50 float-right" v-model="dueInput"></b-form-datepicker>
+                                    <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model="nameInput">
                                 </div>
                             </div>
-                        <button type="button" class="btn btn-danger float-left">Delete</button>
-                        <button type="button" class="btn btn-success float-right" @click="update(); $emit('close'); $emit('update-name', [nameInput, dueInput])">Submit</button>
-                        <button type="button" class="btn btn-light float-right mr-2" @click="$emit('close')">Close</button>
-                        </form>
+                            <div class="form-row mt-1 mb-3">
+                                    <div class="form-group col-12 mb-0">
+                                        <label class="mt-2 mb-0 float-left" for="due-datepicker">Task Due</label>
+                                        <b-form-datepicker id="due-datepicker" class="mb-2 w-50 float-right" v-model="dueInput"></b-form-datepicker>
+                                    </div>
+                                </div>
+                            <button type="button" class="btn btn-danger float-left" @click="$emit('delete-project');">Delete</button>
+                            <button type="button" class="btn btn-success float-right" @click="update(); $emit('close'); $emit('update-name', [nameInput, dueInput])">Submit</button>
+                            <button type="button" class="btn btn-light float-right mr-2" @click="$emit('close')">Close</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,17 +70,14 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: table;
   transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
-  display: table-cell;
   vertical-align: middle;
 }
 
 .modal-container {
-  width: 600px;
   margin: 0px auto;
   background-color: #fff;
   border-radius: 2px;

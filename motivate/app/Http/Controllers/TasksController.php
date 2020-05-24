@@ -49,14 +49,21 @@ class TasksController extends Controller
 
         $task->task_name = $request->task_name;
         $task->task_description = $request->task_description;
-        $task->task_due = $request->task_due;
-        $task->task_completed = $request->task_completed;
-        $task->completion_date = $request->completion_date;
+        $task->task_due = (($request->task_due == 'null') ? null : $request->task_due);
+        $task->task_completed = (int)$request->task_completed;
+        $task->completion_date = (($request->completion_date == 'null') ? null : $request->completion_date);
         $task->task_priority = $request->task_priority;
         $task->task_progress_weight = $request->task_progress_weight;
         $task->section_id = $request->section_id;
 
         $task->save();
+    }
+
+    public function destroy($id)
+    {
+        Task::destroy($id);
+
+        return response(null, Response::HTTP_OK);
     }
 
     public function tasksBySection($sectionId)

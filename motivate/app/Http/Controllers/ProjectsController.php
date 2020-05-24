@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Faker\Generator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectsController extends Controller
 {
@@ -43,6 +44,13 @@ class ProjectsController extends Controller
         $project->user_id = $request->user_id;
 
         $project->save();
+    }
+
+    public function destroy($id)
+    {
+        Project::destroy($id);
+
+        return response(null, Response::HTTP_OK);
     }
 
     public function projectsByUser($userid)

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Project;
 
 class ProjectPageController extends Controller
 {
@@ -23,6 +25,10 @@ class ProjectPageController extends Controller
      */
     public function index($id)
     {
-        return view('project')->with('id', $id);
+        if(Auth::user()->id == Project::find($id)->user_id){
+            return view('project')->with('id', $id);
+        }else{
+            return 'Error: You are not authorized to view this project';
+        }
     }
 }
