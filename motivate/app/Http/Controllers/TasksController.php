@@ -70,4 +70,22 @@ class TasksController extends Controller
     {
         return Task::where('section_id', $sectionId)->get();
     }
+
+    public function tasksByProject($projectId)
+    {
+        return Task::select('tasks.id', 'tasks.completion_date', 'projects.created_at')
+        ->join('sections', 'sections.id', '=', 'tasks.section_id')
+        ->join('projects', 'projects.id', '=', 'sections.project_id')
+        ->where('sections.project_id', $projectId)
+        ->get();
+    }
+
+    public function tasksByUser($userId)
+    {
+        return Task::select('tasks.id', 'tasks.completion_date', 'sections.project_id', 'projects.project_name', 'projects.created_at', 'projects.project_due')
+        ->join('sections', 'sections.id', '=', 'tasks.section_id')
+        ->join('projects', 'projects.id', '=', 'sections.project_id')
+        ->where('projects.user_id', $userId)
+        ->get();
+    }
 }

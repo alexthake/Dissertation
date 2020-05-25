@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.14.0",
-        "moment": "^2.25.3"
+        "chart.js": "^2.9.3",
+        "moment": "^2.25.3",
+        "vue-chartjs": "^3.5.0"
     }
 }

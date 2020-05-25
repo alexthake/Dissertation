@@ -4,7 +4,7 @@
             <div class="container pt-2 p-0">
                 <div class="row mb-1">
                     <div class="col-12 col-lg-8">
-                        <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model.lazy="nameInput" @change="update()">
+                        <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model.lazy="nameInput" @change="patchSection()">
                     </div>
                     <div class="col-9 col-lg-3">
                             <h6 v-if="this.dueValue" :class="'d-inline-block mx-2 float-left float-lg-right mt-2 '+((this.dueMarker >= 100 && this.sectionProgress != 100) ? 'text-red' : '')">{{dueString}}</h6><h6 v-if="this.dueValue" :class="'d-inline-block float-left float-lg-right mt-2 '+((this.dueMarker >= 100 && this.sectionProgress != 100) ? 'text-red' : '')"><b-icon-alarm></b-icon-alarm></h6>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <edit-section v-on:update-name="updateSection($event)" v-on:delete-section="del" v-if="showEditSectionModal" @close="showEditSectionModal = false" :sectionId=this.id :projectId=this.project :initialNameInput=this.name :initialDueInput=this.dueValue></edit-section>
+                <edit-section v-on:update-name="updateSection($event)" v-on:delete-section="del" v-if="showEditSectionModal" @close="showEditSectionModal = false" :sectionId=this.id :projectId=this.project :initialNameInput=this.nameInput :initialDueInput=this.dueValue></edit-section>
                 
                 <task
                 v-for="task in tasks"
@@ -68,7 +68,7 @@
                 nameInput: this.name,
                 dueValue: this.due,
                 dueMarker: 0,
-                dueString: moment(this.dueValue).format('DD/MM/YY'),
+                dueString: moment(this.due).format('DD/MM/YY'),
                 dueMarker: Math.floor((position/span)*100),
                 sectionProgress: 0,
             }
@@ -86,7 +86,7 @@
                 const { data } = await window.axios.get('/api/tasks/section/'+this.id);
                 data.forEach(task => this.tasks.push(new tasksIni(task)));
             },
-            async update() {
+            async patchSection() {
                 await window.axios.patch(`/api/sections/`+this.id, { 
                         section_name: this.nameInput, 
                         section_due: this.dueValue,
@@ -124,8 +124,9 @@
             updateSection($event){
                 this.nameInput = $event[0];
                 this.dueValue = $event[1];
+                this.patchSection();
                 this.getProgress();
-                this.dueString = moment(this.due).format('DD/MM/YY');
+                this.dueString = moment(this.dueValue).format('DD/MM/YY');
             },
             del(){
                 this.$emit('delete-section', this.id);

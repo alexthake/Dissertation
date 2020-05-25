@@ -59,6 +59,7 @@
                 sections: [],
                 showEditModal: false,
                 dueMarker: 0,
+                dueValue: this.due,
                 dueString: moment(this.due).format('DD/MM/YY'),
                 projectProgress: 0,
             }
@@ -97,9 +98,9 @@
             },
             updateProject($event){
                 this.name = $event[0];
-                this.due = $event[1];
+                this.dueValue = $event[1];
                 this.getProjectProgress();
-                this.dueString = moment(this.due).format('DD/MM/YY');
+                this.dueString = moment(this.dueValue).format('DD/MM/YY');
             },
             del() {
                 this.$emit('delete-project', this.id);

@@ -28,6 +28,8 @@ Route::resource('/sections', 'SectionsController', [
     'except' => ['index']
 ]);
 Route::get('/tasks/section/{id}', 'TasksController@tasksBySection');
+Route::get('/tasks/project/{id}', 'TasksController@tasksByProject');
+Route::get('/tasks/user/{id}', 'TasksController@tasksByUser');
 Route::resource('/tasks', 'TasksController', [
     'except' => ['index']
 ]);

@@ -7,8 +7,11 @@
                         <div class="card-body">
                             <form>
                             <div class="form-row">
-                                <div class="form-group col-12 mb-0">
+                                <div class="form-group col-10 mb-0">
                                     <input id="name-input" type="text" class="form-control chameleon-input mb-2 w-75 float-left p-0" v-model="nameInput">
+                                </div>
+                                <div class="form-group col-2 mb-0">
+                                    <a type="button" class="btn btn-primary float-right" :href="'/progress/'+this.projectId" >Analysis</a>
                                 </div>
                             </div>
                             <div class="form-row mt-1 mb-3">
