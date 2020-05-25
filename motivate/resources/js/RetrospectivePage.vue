@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-8 card py-3">
                 <retrospective

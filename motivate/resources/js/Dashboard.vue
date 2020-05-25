@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container py-2">
         <b-alert
         :show="dismissCountDown"
         dismissible
