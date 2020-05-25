@@ -46,6 +46,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/project/{id}', 'ProjectPageController@index');
+Route::get('/progress/{id}', 'RetrospectivePageController@index');
 
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
