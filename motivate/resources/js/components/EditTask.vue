@@ -11,7 +11,7 @@
                                         <input id="name-input" type="text" class="form-control chameleon-input mb-2 p-0" v-model="nameInput">
                                     </div>
                                     <div class="col-3">
-                                        <p v-if="this.completion" class="mt-3" style="font-size: 12px;">completed:{{this.completion_text}}</p>
+                                        <p v-if="this.completion" class="mt-3" style="font-size: 12px;">completed: {{this.completion_text}}</p>
                                     </div>
                                 </div>
                                 <textarea class="form-control" id="taskDescription" placeholder="description..." v-model="descriptionInput"></textarea>

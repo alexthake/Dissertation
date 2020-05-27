@@ -7,7 +7,7 @@
         <div class="col-2">
             <button id="show-edit-modal" type="button" @click="showEditTaskModal = true" class="btn btn-light float-right py-1">...</button>
         </div>
-        <edit-task v-on:update-name="updateTask($event)" v-on:delete-task="del" v-if="showEditTaskModal" @close="showEditTaskModal = false" :taskId=this.id :sectionId=this.section :completion=this.completionValue :initialNameInput=this.nameInput :initialDescInput=this.description :initialDueInput=this.due :initialPriorityInput=this.priority :initialWeightInput=this.weight></edit-task>
+        <edit-task v-on:update-task="updateTask($event)" v-on:delete-task="del" v-if="showEditTaskModal" @close="showEditTaskModal = false" :taskId=this.id :sectionId=this.section :completion=this.completionValue :initialNameInput=this.nameInput :initialDescInput=this.description :initialDueInput=this.due :initialPriorityInput=this.priority :initialWeightInput=this.weight></edit-task>
     </div>
 </template>
 
