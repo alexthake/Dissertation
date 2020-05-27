@@ -122,7 +122,8 @@
                 this.tasks.splice(index, 1);
             },
             updateSection($event){
-                this.nameInput = $event[0];
+                this.name = (($event[0] == null) ? 'Task' : $event[0]);
+                this.nameInput = this.name;
                 this.dueValue = $event[1];
                 this.patchSection();
                 this.getProgress();
