@@ -37,11 +37,13 @@
         },
         methods: {
             updateTask($event){
-                this.name = $event[0];
+                this.name = (($event[0] == null) ? 'Task' : $event[0]);
+                this.nameInput = this.name;
                 this.description = $event[1];
                 this.due = $event[2];
                 this.priority = $event[3];
                 this.weight = $event[4];
+                this.patchTask();
             },
             async patchTask() {
                 await window.axios.patch(`/api/tasks/`+this.id, { 

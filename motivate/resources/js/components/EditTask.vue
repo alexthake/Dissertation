@@ -35,7 +35,7 @@
                                 </div>
 
                                 <button type="button" class="btn btn-danger float-left" @click="$emit('delete-task');">Delete</button>
-                                <button type="button" class="btn btn-success float-right" @click="update(); $emit('close'); $emit('update-name', [nameInput, descriptionInput, dueInput, priorityInput, weightInput])">Submit</button>
+                                <button type="button" class="btn btn-success float-right" @click="update(); $emit('close'); $emit('update-task', [nameInput, descriptionInput, dueInput, priorityInput, weightInput])">Submit</button>
                                 <button type="button" class="btn btn-light float-right mr-2" @click="$emit('close')">Close</button>
                             </form>
                         </div>
