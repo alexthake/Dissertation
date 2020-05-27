@@ -66,6 +66,7 @@
 <script>
     import moment from 'moment'
 
+    //Creates an array of moment dates between two given dates
     function datesBetween(startDate, endDate) {
         let dateArray = new Map();
         let currentDate = startDate;
