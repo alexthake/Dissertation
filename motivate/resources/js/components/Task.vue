@@ -59,6 +59,7 @@
             },
             del(){
                 this.$emit('delete-task', this.id);
+                this.$emit('get-progress');
             }
         },
         watch: {
